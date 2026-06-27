@@ -1,0 +1,26 @@
+services:
+  adg:
+    build: .
+    ports:
+      - "7377:7377"
+    volumes:
+      - ./examples/config.yaml:/etc/adg/config.yaml:ro
+    environment:
+      - ADG_CONFIG_PATH=/etc/adg/config.yaml
+      - ADG_PORT=7377
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: adg_demo
+      POSTGRES_PASSWORD: adg_demo_pass
+      POSTGRES_DB: adg_demo
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

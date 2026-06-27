@@ -1,0 +1,47 @@
+version: "1"
+
+sources:
+  - type: postgres
+    name: analytics_db
+    connection:
+      host: localhost
+      database: analytics
+      port: 5432
+    credentials:
+      host: localhost
+      database: analytics
+      username: readonly_user
+      password: secret-db-pass-2024
+
+  - type: rest
+    name: github_api
+    connection:
+      url: https://api.github.com
+    credentials:
+      apiKey: ghp_example-personal-access-token
+      headerName: Authorization
+
+scopes:
+  - agent: code-review-bot
+    sources:
+      - name: analytics_db
+        rules:
+          - table: pull_requests
+            fields: [id, title, status, author, created_at]
+            filters:
+              status: open
+          - table: deployments
+            fields: [id, environment, status, deployed_at]
+  - agent: data-scientist
+    sources:
+      - name: analytics_db
+        rules:
+          - table: pull_requests
+            filters:
+              author: data-scientist
+          - table: deployments
+
+audit:
+  enabled: true
+  format: jsonl
+  output: /tmp/adg-audit.log
