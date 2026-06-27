@@ -12,7 +12,7 @@ describe('CredentialStore', () => {
   const store = CredentialStore.fromConfig(config);
 
   it('stores credentials from config', () => {
-    expect(store.size).toBe(2);
+    expect(store.size).toBe(3);
   });
 
   it('retrieves credentials by source name', () => {

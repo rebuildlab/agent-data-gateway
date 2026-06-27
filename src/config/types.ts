@@ -15,7 +15,7 @@ const ApiCredentialSchema = z.object({
 const CredentialSchema = z.union([DbCredentialSchema, ApiCredentialSchema]);
 
 const SourceSchema = z.object({
-  type: z.enum(['postgres', 'rest']),
+  type: z.enum(['postgres', 'rest', 'mysql']),
   name: z.string(),
   connection: z.object({
     host: z.string().optional(),

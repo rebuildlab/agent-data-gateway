@@ -33,7 +33,7 @@ See `src/connectors/template/mysql.ts` for a complete scaffold.
 |------|------|--------|
 | postgres | `src/connectors/postgres.ts` | ✅ Production |
 | rest | `src/connectors/rest.ts` | ✅ Production |
-| mysql | `src/connectors/template/mysql.ts` | 🔧 Template (needs `mysql2` npm dep) |
+| mysql | `src/connectors/mysql.ts` | ✅ Production |
 | mongo | (planned) | 📋 |
 | graphql | (planned) | 📋 |
 | s3 | (planned) | 📋 |

@@ -21,6 +21,18 @@ sources:
       apiKey: ghp_example-personal-access-token
       headerName: Authorization
 
+  - type: mysql
+    name: user_db
+    connection:
+      host: localhost
+      database: users
+      port: 3306
+    credentials:
+      host: localhost
+      database: users
+      username: app_user
+      password: mysql-secret-2024
+
 scopes:
   - agent: code-review-bot
     sources:

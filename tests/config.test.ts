@@ -9,7 +9,7 @@ const exampleConfig = resolve(__dirname, '../examples/config.yaml');
 describe('Config schema', () => {
   it('loads example config without error', () => {
     const config = loadConfig(exampleConfig);
-    expect(config.sources).toHaveLength(2);
+    expect(config.sources).toHaveLength(3);
     expect(config.scopes).toHaveLength(2);
   });
 
@@ -25,6 +25,14 @@ describe('Config schema', () => {
     const rest = config.sources.find((s) => s.type === 'rest');
     expect(rest).toBeDefined();
     expect(rest!.name).toBe('github_api');
+  });
+
+  it('parses MySQL source type', () => {
+    const config = loadConfig(exampleConfig);
+    const mysql = config.sources.find((s) => s.type === 'mysql');
+    expect(mysql).toBeDefined();
+    expect(mysql!.name).toBe('user_db');
+    expect(mysql!.connection.port).toBe(3306);
   });
 
   it('rejects invalid config', () => {
