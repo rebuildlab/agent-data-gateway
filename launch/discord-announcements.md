@@ -28,7 +28,7 @@ Agents query through ADG → credential injection → scope enforcement → audi
 
 Also auto-exposes each source as MCP tools. Claude Desktop connects via `http://localhost:7377/mcp`.
 
-Tech: TypeScript + Fastify, Docker Compose, 66 tests. Looking for early feedback!
+Tech: TypeScript + Fastify, Docker Compose, 40 tests. Looking for early feedback!
 
 ---
 
@@ -62,7 +62,7 @@ Repo: (link) – MIT, Docker Compose.
 
 **Post:**
 
-Agent Data Gateway – middleware for secure AI agent data access. MIT, Docker Compose, 66 tests.
+Agent Data Gateway – middleware for secure AI agent data access. MIT, Docker Compose, 40 tests.
 
 Core idea: AI agents should never hold database credentials. ADG sits between agents and data, handling auth, scoping, and audit.
 

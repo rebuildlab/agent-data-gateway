@@ -60,7 +60,7 @@ curl -X POST http://localhost:7377/mcp \
   -d '{"jsonrpc":"2.0","method":"tools/list","id":1}'
 ```
 
-**Stack:** TypeScript, Fastify, Zod, Pino, Vitest – 66 tests, clean build.
+**Stack:** TypeScript, Fastify, Zod, Pino, Vitest – 40 tests, clean build.
 
 **Status:** We're at the "works on our machine" phase — Postgres and REST API connectors done, MCP protocol implemented, Docker Compose ready. Looking for early feedback from teams running AI agents against production data.
 
@@ -69,7 +69,8 @@ curl -X POST http://localhost:7377/mcp \
 **Questions we'd love your take on:**
 1. What data sources do you need most? (MySQL coming next)
 2. Are you doing anything to scope agent data access today?
-3. Would you use an MCP bridge to existing APIs, or primarily DBs?
+3. What's your biggest pain with agent data security?
+4. Would you use an MCP bridge to existing APIs, or primarily DBs?
 
 ---
 
@@ -88,4 +89,4 @@ Think of ADG as the policy enforcement point between your agent identity system 
 They solve a different problem — exposing DBs as REST/GraphQL APIs. ADG is specifically for AI agent access patterns: MCP protocol, per-agent scoping, credential injection, audit. An agent shouldn't need to know your DB host, port, or user.
 
 ### If someone asks about production readiness
-Right now: Postgres + REST API connectors, MCP tools/list + tools/call, Docker Compose. Needs: MySQL connector, connection pooling, TLS, and broader MCP spec coverage before we'd call it production. The security core (credential injection + scoping + audit) is tested and solid.
+Right now: Postgres + REST + MySQL connectors, MCP tools/list + tools/call, Docker Compose. Needs: connection pooling, TLS, and broader MCP spec coverage before we'd call it production. The security core (credential injection + scoping + audit) is tested and solid.

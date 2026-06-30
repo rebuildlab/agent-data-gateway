@@ -57,3 +57,97 @@ audit:
   enabled: true
   format: jsonl
   output: /tmp/adg-audit.log
+
+# ── Governance Policies ─────────────────────────────────────────────
+governance:
+  enabled: true
+
+  # Data source policies: classification, masking, retention
+  sourcePolicies:
+    - source: analytics_db
+      defaultClassification: internal
+      tables:
+        - table: users
+          classification: pii
+          maxRows: 100
+          columns:
+            - name: email
+              classification: pii
+              masking: partial
+              maskFormat: "***@****.***"
+              description: "User email address — partially masked"
+            - name: ssn
+              classification: pii
+              masking: redact
+              description: "Social security number — fully redacted"
+            - name: password_hash
+              classification: restricted
+              masking: redact
+          rowFilter: "deleted_at IS NULL"
+          requireApprovalForWrites: true
+        - table: pull_requests
+          classification: internal
+        - table: deployments
+          classification: internal
+          requireApprovalForWrites: true
+
+    - source: user_db
+      defaultClassification: pii
+      tables:
+        - table: customers
+          classification: pii
+          maxRows: 50
+          columns:
+            - name: email
+              classification: pii
+              masking: partial
+              maskFormat: "***@****.***"
+            - name: phone
+              classification: pii
+              masking: partial
+              maskFormat: "***-***-****"
+            - name: credit_card
+              classification: pci
+              masking: redact
+          residency: ["EU", "US"]
+
+  # Agent policies: what each agent can do
+  agentPolicies:
+    - agent: code-review-bot
+      allowedClassifications: [public, internal]
+      maxRowsPerQuery: 500
+      maxConcurrency: 3
+      queryTimeoutMs: 15000
+      allowedOperations: [SELECT]
+      allowedSources: [analytics_db]
+      allowRawSQL: false
+
+    - agent: data-scientist
+      allowedClassifications: [public, internal, confidential]
+      maxRowsPerQuery: 5000
+      maxConcurrency: 5
+      queryTimeoutMs: 60000
+      allowedOperations: [SELECT]
+      allowedSources: [analytics_db]
+
+    - agent: admin-bot
+      allowedClassifications: [public, internal, confidential, restricted, pii]
+      maxRowsPerQuery: 10000
+      maxConcurrency: 10
+      queryTimeoutMs: 120000
+      allowedOperations: [SELECT, INSERT, UPDATE, DELETE]
+      requireApprovalForWrites: true
+      allowRawSQL: true
+
+  # Default policy for agents without explicit rules
+  defaultAgentPolicy:
+    agent: default
+    allowedClassifications: [public]
+    maxRowsPerQuery: 100
+    maxConcurrency: 1
+    queryTimeoutMs: 10000
+    allowedOperations: [SELECT]
+
+  retention:
+    auditLogDays: 365
+    resultCacheTTL: 0

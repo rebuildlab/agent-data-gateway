@@ -30,7 +30,7 @@ Launch checklist for Agent Data Gateway.
 - Messages: `discord-announcements.md`
 
 ### Twitter/X
-- Short thread: problem → solution → code snippet → link
+- Thread: `twitter-thread.md`
 - Tag @LangChainAI, relevant MCP accounts
 - Use hashtags: #MCP #AIAgents #oss
 

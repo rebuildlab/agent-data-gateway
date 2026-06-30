@@ -38,7 +38,7 @@ scopes:
 
 Then Claude Desktop connects via `http://localhost:7377/mcp` and auto-discovers your DB as tools.
 
-Tech: TypeScript + Fastify, 66 tests, MIT license.
+Tech: TypeScript + Fastify, 40 tests, MIT license.
 
 We're early-stage and looking for feedback. What's your current setup for agent data access?
 
@@ -97,4 +97,4 @@ curl -X POST http://localhost:7377/mcp \
 
 Works with Claude Desktop, Codex, any MCP client.
 
-Repo: (link) – MIT, Docker Compose, 66 tests.
+Repo: (link) – MIT, Docker Compose, 40 tests.
